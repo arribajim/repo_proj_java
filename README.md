@@ -1,2 +1,4 @@
 # gw
-gw accelerators with/for me
+gw accelerators
+
+1. Connect PC - CC
