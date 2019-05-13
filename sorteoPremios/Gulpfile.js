@@ -1,23 +1,23 @@
-/*global require*/
+/*global require, console*/
 var gulp = require("gulp"),
     webserver = require("gulp-webserver"),
     jsLint = require("gulp-jslint-simple");
 
-// Servidor web de desarrollo
+// dev-server pay attention, gulp 4 needs return clause
 gulp.task("dev-server", function () {
     "use strict";
 
-    gulp.src("./app")
+    return gulp.src("./app")
         .pipe(webserver({
             open: true,
             livereload: true
         }));
 });
 
-// Busca errores de JavaScript de acuerdo con JsLint
+// Busca errores de JavaScript de acuerdo con JsLint  pay attention, gulp 4 needs return clause
 gulp.task("jsLint", function () {
     "use strict";
-    gulp.src('./app/js/*.js')
+    return gulp.src('./app/js/*.js')
         .pipe(jsLint.run({
             // project-wide JSLint options
             node: true,
@@ -28,4 +28,7 @@ gulp.task("jsLint", function () {
             reporter: require('jshint-stylish').reporter
         }));
 });
+
+
+
 gulp.task("default", gulp.series("jsLint", "dev-server"));

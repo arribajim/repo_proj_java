@@ -29,7 +29,8 @@
   "dependencies": {
     "gulp": "^4.0.1",
     "gulp-jslint": "^1.0.10",
-    "gulp-webserver": "^0.9.1"
+    "gulp-webserver": "^0.9.1",
+    "popper.js": "^1.15.0"
   },
   "preferGlobal": true,
   "private": false,

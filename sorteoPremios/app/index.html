@@ -2,13 +2,41 @@
 
 <head>
     <title>Sorteo de Premios</title>
-
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
     <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="js/main.js"></script>
 </head>
 
-<body >
+<body ng-app="SorteoPremios" ng-controller="PremioController">
     <h1>Bienvenido al sorteo de premios del día </h1>
-    </body>
+    <!-- {{fechaSorteo|filtroFechaSorteo}} for fechaSorteo prev use this filter   date:format:timezone-->
+    <!--
+
+    TODO FIX THE PROBLEM WITH DROPDOWN WHEN THE USER CLICK OVER IT. DOESN'T DISPLAY OPTIONS
+data-ng-init="elegirPremio()"
+    <h3>Enhorabuena te ha tocado </h3>
+    <li ng-repeat="premio in premios">
+        <h3>{{premio}}</h3>
+    </li>
+-->
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="premio">
+            Elige tu premio
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li>
+                <a href="#" ng-click="elegirPremios('viajes')">Viajes</a>
+            </li>
+            <li>
+                <a href="#" ng-click="elegirPremios('motor')">Motor</a>
+            </li>
+            <li>
+                <a href="#" ng-click="elegirPremios('propiedades')">Propiedades</a>
+            </li>
+        </ul>
+    </div>
+    <h3 ng-show="premio">Enhorabuena te ha tocado {{premio}}</h3>
+</body>
 
 </html>
