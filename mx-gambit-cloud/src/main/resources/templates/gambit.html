@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Gambit Cloud</title>
+  </head>
+  
+  <body>
+    <table>
+    <thead>
+        <tr>
+            <th> Title </th>
+            <th> Author </th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${countries.empty}">
+            <td colspan="2"> No Books Available </td>
+        </tr>
+        <tr th:each="book : ${countries}">
+            <td><span th:text="${book.name}"> Title </span></td>
+            <td><span th:text="${book.CountryCode}"> Author </span></td>
+        </tr>
+    </tbody>
+</table>
+    
+  </body>
+</html>
+
