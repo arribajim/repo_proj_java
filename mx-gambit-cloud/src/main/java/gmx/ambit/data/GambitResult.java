@@ -5,7 +5,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -23,8 +26,7 @@ public class GambitResult {
 	@NotNull
 	@Column(name="name")
 	private String Name;
-	
-	
+		
 	private Date createTime;
 	
 	@PrePersist
@@ -33,7 +35,7 @@ public class GambitResult {
 	  }
 	
 	@Column(name="odd")
-	private Number odd;
+	private Double odd;
 	
 	@Column(name="priority")
 	private Integer Priority;
@@ -41,8 +43,10 @@ public class GambitResult {
 	@Column(name="locked")
 	private Boolean Locked;
 		
-	@Column(name="parentnodeid")
-	private Integer parentnodeid;
+//	@Column(name="parentnodeid")
+//	private Integer parentnodeid;
 	
-	
+	@ManyToOne
+	@JoinColumn(name = "parentnodeid",  foreignKey = @ForeignKey(name = "gambit_results_parentnodeid_fkey" ))
+	private Game game;
 }

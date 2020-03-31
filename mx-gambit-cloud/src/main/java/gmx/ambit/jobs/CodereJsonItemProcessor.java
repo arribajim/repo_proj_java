@@ -1,77 +1,64 @@
 package gmx.ambit.jobs;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
-import org.json.simple.parser.JSONParser;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
-import gmx.ambit.bean.Event;
-import gmx.ambit.parcer.ParceEventsJson;
-import lombok.extern.slf4j.Slf4j;
+import gmx.ambit.bean.EventBean;
+import gmx.ambit.bean.GameBean;
+import gmx.ambit.bean.ResultBean;
+import gmx.ambit.data.Event;
+import gmx.ambit.data.GambitResult;
+import gmx.ambit.data.Game;
 
 
-@Slf4j
+
 @Component
-public class CodereJsonItemProcessor implements ItemProcessor<Event, Event>{
+public class CodereJsonItemProcessor implements ItemProcessor<EventBean, Event>{
 
 	@Override
-	public Event process(Event item) throws Exception {
-		log.info("Valor de Item ${item} "+item);
-		return item;//todo e
-	}
-	
-	private static ArrayList<Event> jsonParce() {
-		log.info("Start info parce");
-		JSONParser jsonParser = new JSONParser();      
-        try 
-        {
-        	FileReader reader = new FileReader("c://tmp/files/GetEvents.json");
-        	Object obj = jsonParser.parse(reader);
-        	
-            ParceEventsJson parce = new ParceEventsJson();
-            parce.parceEvents(obj);
-            parce.getEventList().forEach( event ->{
-            	log.info(event.sqlInsert());
-            });
-            parce.parceParticipants(obj);
-            parce.getParticipantList().forEach(part ->{
-            	log.info(part.sqlInsert());
-            });
-            
-            parce.parceGames(obj);
-            parce.getGameList().forEach(elt->{
-            	log.info(elt.sqlInsert());
-            });
-            parce.parceResults(obj);
-            parce.getResultList().forEach(elt->{
-            	log.info(elt.sqlInsert());
-            });
-            
-//            reader = new FileReader("c://tmp/files/GetCountries.json");
-//            obj = jsonParser.parse(reader);
-//        	ParceCountriesJson parcec = new ParceCountriesJson();
-//        	parcec.parceCountries(obj);
-//        	parcec.parceLeagues(obj);
-//        	parcec.getCountriesList().forEach(l ->{
-//        		log.info(l.sqlInsert());
-//        	});
-//        	parcec.getLeaguesList().forEach(l ->{
-//        		log.info(l.sqlInsert());
-//        	});
-            return parce.getEventList();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-	}
-	
+	public Event process(EventBean item) throws Exception {		
+		Event event = new Event();
+		event.setName(item.getName());
+		event.setNodeId(new BigInteger(item.getNodeId()));
+		event.setParentnodeid(new BigInteger(item.getParentNodeId()));
+		event.setPriority(item.getPriority());
+		event.setStarDate(item.getStarDate());
+		event.setLocked(item.getLocked());
+		event.setStatisticsId(item.getStatisticsId());
+		
+		ArrayList<Game> games = new ArrayList<Game>();
+		item.getGames().forEach(arg0 ->{
+			Game g = new Game();
+			GameBean gb =(GameBean) arg0;
+			g.setName(gb.getName());
+			g.setNodeId(new BigInteger(gb.getNodeId()));
+			//g.setParentnodeid(new BigInteger(gb.getParentNodeId()));
+			g.setEvent(event);
+			g.setPriority(gb.getPriority());
+			g.setLocked(gb.isLocked());			
+			games.add(g);
+			ArrayList<GambitResult> results = new ArrayList<GambitResult>();			
+			gb.getResults().forEach( result ->{				
+				ResultBean rb= (ResultBean) result;
+				GambitResult gr = new GambitResult();
+				gr.setGame(g);
+				gr.setLocked(rb.isLocked());
+				gr.setName(rb.getName());
+				gr.setNodeId(new BigInteger(rb.getNodeId()));
+				gr.setOdd(new Double(rb.getOdd().doubleValue()));
+				gr.setPriority(rb.getPriority());
+				
+				results.add(gr);
+			});
+			g.setResults(results);
+		});
+		event.setGames(games);
+		
+		
+		return event;
+	}	
 
 }

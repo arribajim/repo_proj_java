@@ -10,23 +10,23 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import gmx.ambit.bean.Event;
-import gmx.ambit.bean.Gambit;
-import gmx.ambit.bean.Game;
-import gmx.ambit.bean.Participant;
-import gmx.ambit.bean.Result;
+import gmx.ambit.bean.EventBean;
+import gmx.ambit.bean.GambitBean;
+import gmx.ambit.bean.GameBean;
+import gmx.ambit.bean.ParticipantBean;
+import gmx.ambit.bean.ResultBean;
 
 public class ParceEventsJson {
-	private ArrayList<Event> eventList;
-	private ArrayList<Game> gameList;
-	private ArrayList<Result> resultList;
-	private ArrayList<Participant> participantList;
-	private ArrayList<Gambit> gambitList;
+	private ArrayList<EventBean> eventList;
+	private ArrayList<GameBean> gameList;
+	private ArrayList<ResultBean> resultList;
+	private ArrayList<ParticipantBean> participantList;
+	private ArrayList<GambitBean> gambitList;
 	
 	@SuppressWarnings("unchecked")
 	public void parceEvents(Object obj) {
 		JSONArray events = (JSONArray) obj;
-		eventList = new ArrayList<Event>();
+		eventList = new ArrayList<EventBean>();
 		events.forEach( country ->{
 			parceEvent((JSONObject)country);
 		});
@@ -35,7 +35,7 @@ public class ParceEventsJson {
 	@SuppressWarnings("unchecked")
 	public void parceGames(Object obj) {
 		JSONArray events = (JSONArray) obj;
-		gameList = new ArrayList<Game>();		
+		gameList = new ArrayList<GameBean>();		
 		events.forEach( event ->{
 			JSONArray games = (JSONArray) ((JSONObject)event).get("Games");
 			games.forEach(part ->{
@@ -51,7 +51,7 @@ public class ParceEventsJson {
     	FileReader reader = new FileReader(jsonFilePath);
     	Object obj = jsonParser.parse(reader);    
 		JSONArray events = (JSONArray) obj;
-		gambitList = new ArrayList<Gambit>();
+		gambitList = new ArrayList<GambitBean>();
 		try {
 			
 		
@@ -79,7 +79,7 @@ public class ParceEventsJson {
 	
 	private void parceGambit(JSONObject jsonObject) {
 		// TODO Auto-generated method stub		
-		Gambit gambit = new Gambit();		
+		GambitBean gambit = new GambitBean();		
 		gambit.setParentNodeId( jsonObject.get("NodeId").toString());//from results nodes only need historic info
 		gambit.setOdd( Double.parseDouble(jsonObject.get("Odd").toString()));		
         gambitList.add(gambit);
@@ -88,7 +88,7 @@ public class ParceEventsJson {
 	@SuppressWarnings("unchecked")
 	public void parceResults(Object obj) {
 		JSONArray events = (JSONArray) obj;
-		resultList = new ArrayList<Result>();		
+		resultList = new ArrayList<ResultBean>();		
 		events.forEach( event ->{
 			JSONArray games = (JSONArray) ((JSONObject)event).get("Games");
 			games.forEach(part ->{
@@ -104,7 +104,7 @@ public class ParceEventsJson {
 
 	private void parceResult(JSONObject jsonObject) {
 		// TODO Auto-generated method stub
-		Result result = new Result();
+		ResultBean result = new ResultBean();
 		result.setNodeId( jsonObject.get("NodeId").toString());	                
 		result.setName( jsonObject.get("Name").toString());
 		result.setPriority( Integer.parseInt(jsonObject.get("Priority").toString()));
@@ -117,7 +117,7 @@ public class ParceEventsJson {
 	@SuppressWarnings("unchecked")
 	public void parceParticipants(Object obj) {
 		JSONArray events = (JSONArray) obj;
-		participantList = new ArrayList<Participant>();		
+		participantList = new ArrayList<ParticipantBean>();		
 		events.forEach( event ->{
 			JSONArray participants = (JSONArray) ((JSONObject)event).get("Participants");
 
@@ -128,18 +128,18 @@ public class ParceEventsJson {
 	}
 	private void parceParticipant(JSONObject jsonObject, JSONObject event) {
 		//Get jsonObject object within list     
-			Participant part = new Participant();
+			ParticipantBean part = new ParticipantBean();
 			part.setNodeId( jsonObject.get("Id").toString());	                	        
 	        part.setParentNodeId(event.get("ParentNodeId").toString());
 	        //TODO move 
 	        part.setName(parceName((JSONObject) jsonObject,"LocalizedNames"));	        
-	        part.setShortName(parceName((JSONObject) jsonObject,"LocalizedShortNames"));	        
+	        //part.setShortName(parceName((JSONObject) jsonObject,"LocalizedShortNames"));	        
 	        participantList.add(part);		
 	}
 	
 	private void parceGame(JSONObject jsonObject) {
 		// TODO Auto-generated method stub
-		Game game = new Game();
+		GameBean game = new GameBean();
 		game.setNodeId( jsonObject.get("NodeId").toString());	                
 		game.setName( jsonObject.get("Name").toString());
 		game.setPriority( Integer.parseInt(jsonObject.get("Priority").toString()));
@@ -161,7 +161,7 @@ public class ParceEventsJson {
 
 	private void parceEvent(JSONObject jsonObject) {
 		//Get jsonObject object within list     
-		Event event = new Event();
+		EventBean event = new EventBean();
 		event.setNodeId( jsonObject.get("NodeId").toString());                
 		event.setName( jsonObject.get("Name").toString());
 		event.setLocked( Boolean.parseBoolean(jsonObject.get("Locked").toString()));
@@ -185,49 +185,49 @@ public class ParceEventsJson {
 	/**
 	 * @return the eventList
 	 */
-	public ArrayList<Event> getEventList() {
+	public ArrayList<EventBean> getEventList() {
 		return eventList;
 	}
 	/**
 	 * @param eventList the eventList to set
 	 */
-	public void setEventList(ArrayList<Event> eventList) {
+	public void setEventList(ArrayList<EventBean> eventList) {
 		this.eventList = eventList;
 	}
 	/**
 	 * @return the gameList
 	 */
-	public ArrayList<Game> getGameList() {
+	public ArrayList<GameBean> getGameList() {
 		return gameList;
 	}
 	/**
 	 * @param gameList the gameList to set
 	 */
-	public void setGameList(ArrayList<Game> gameList) {
+	public void setGameList(ArrayList<GameBean> gameList) {
 		this.gameList = gameList;
 	}
 	/**
 	 * @return the resultList
 	 */
-	public ArrayList<Result> getResultList() {
+	public ArrayList<ResultBean> getResultList() {
 		return resultList;
 	}
 	/**
 	 * @param resultList the resultList to set
 	 */
-	public void setResultList(ArrayList<Result> resultList) {
+	public void setResultList(ArrayList<ResultBean> resultList) {
 		this.resultList = resultList;
 	}
 	/**
 	 * @return the participantList
 	 */
-	public ArrayList<Participant> getParticipantList() {
+	public ArrayList<ParticipantBean> getParticipantList() {
 		return participantList;
 	}
 	/**
 	 * @param participantList the participantList to set
 	 */
-	public void setParticipantList(ArrayList<Participant> participantList) {
+	public void setParticipantList(ArrayList<ParticipantBean> participantList) {
 		this.participantList = participantList;
 	}
 }

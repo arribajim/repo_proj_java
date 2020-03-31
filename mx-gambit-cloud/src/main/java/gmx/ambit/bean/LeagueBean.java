@@ -1,6 +1,6 @@
 package gmx.ambit.bean;
 
-public class League extends BaseBean{
+public class LeagueBean extends BaseBean{
 	
 	public String sqlInsert() {
 		String sql =String.format

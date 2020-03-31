@@ -1,9 +1,9 @@
 package gmx.ambit.bean;
 
-public class Country extends BaseBean {
+public class CountryBean extends BaseBean {
 	
 	private String CountryCode;
-	private League[] leagues=null;
+	private LeagueBean[] leagues=null;
 	
 	@Override
 	public String toString() {
@@ -30,13 +30,13 @@ public class Country extends BaseBean {
 	/**
 	 * @return the leagues
 	 */
-	public League[] getLeagues() {
+	public LeagueBean[] getLeagues() {
 		return leagues;
 	}
 	/**
 	 * @param leagues the leagues to set
 	 */
-	public void setLeagues(League[] leagues) {
+	public void setLeagues(LeagueBean[] leagues) {
 		this.leagues = leagues;
 	}
 }

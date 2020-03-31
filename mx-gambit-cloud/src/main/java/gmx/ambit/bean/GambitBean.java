@@ -1,6 +1,6 @@
 package gmx.ambit.bean;
 
-public class Gambit extends Result{
+public class GambitBean extends ResultBean{
 	
 	//insert into gambit values (nextval('gambit_nodeid_seq'),'2020-02-12 18:58:20.000',1.2,2599201059);
 

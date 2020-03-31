@@ -31,8 +31,8 @@ public class GambitTrace {
 	}
 	
 	@Column(name="odd")
-	private Number odd;
+	private Double odd;
 			
 	@Column(name="parentnodeid")
-	private Integer parentnodeid;
+	private BigInteger parentnodeid;
 }

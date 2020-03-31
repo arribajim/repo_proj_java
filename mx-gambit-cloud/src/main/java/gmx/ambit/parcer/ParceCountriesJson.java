@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import gmx.ambit.bean.Country;
-import gmx.ambit.bean.League;
+import gmx.ambit.bean.CountryBean;
+import gmx.ambit.bean.LeagueBean;
 
 public class ParceCountriesJson {
 
-	private ArrayList<Country> countriesList;
-	private ArrayList<League> leaguesList;
+	private ArrayList<CountryBean> countriesList;
+	private ArrayList<LeagueBean> leaguesList;
 	@SuppressWarnings("unchecked")
 	public void parceCountries(Object obj) {
 		JSONArray countries = (JSONArray) obj;
-		countriesList = new ArrayList<Country>();
+		countriesList = new ArrayList<CountryBean>();
 		countries.forEach( country ->{
 			parceCountry((JSONObject)country);
 		});
@@ -25,7 +25,7 @@ public class ParceCountriesJson {
 	@SuppressWarnings("unchecked")
 	public void parceLeagues(Object obj) {
 		JSONArray countries = (JSONArray) obj;
-		leaguesList = new ArrayList<League>();		
+		leaguesList = new ArrayList<LeagueBean>();		
 		countries.forEach( country ->{
 			JSONArray Leagues = (JSONArray) ((JSONObject)country).get("Leagues");
 
@@ -37,7 +37,7 @@ public class ParceCountriesJson {
 	
 	public void parceLeague(JSONObject jsonObject) {
 		//Get jsonObject object within list     
-			League country = new League();
+			LeagueBean country = new LeagueBean();
 	        country.setNodeId( jsonObject.get("NodeId").toString());	                
 	        country.setName( jsonObject.get("Name").toString());
 	        country.setPriority( Integer.parseInt(jsonObject.get("Priority").toString()));
@@ -47,7 +47,7 @@ public class ParceCountriesJson {
 
 	public void parceCountry(JSONObject jsonObject) {
 		//Get jsonObject object within list     
-		Country country = new Country();
+		CountryBean country = new CountryBean();
         country.setNodeId( jsonObject.get("NodeId").toString());
         country.setCountryCode( jsonObject.get("CountryCode").toString());        
         country.setName( jsonObject.get("Name").toString());
@@ -59,28 +59,28 @@ public class ParceCountriesJson {
 	/**
 	 * @return the countriesList
 	 */
-	public ArrayList<Country> getCountriesList() {
+	public ArrayList<CountryBean> getCountriesList() {
 		return countriesList;
 	}
 
 	/**
 	 * @param countriesList the countriesList to set
 	 */
-	public void setCountriesList(ArrayList<Country> countriesList) {
+	public void setCountriesList(ArrayList<CountryBean> countriesList) {
 		this.countriesList = countriesList;
 	}
 
 	/**
 	 * @return the leaguesList
 	 */
-	public ArrayList<League> getLeaguesList() {
+	public ArrayList<LeagueBean> getLeaguesList() {
 		return leaguesList;
 	}
 
 	/**
 	 * @param leaguesList the leaguesList to set
 	 */
-	public void setLeaguesList(ArrayList<League> leaguesList) {
+	public void setLeaguesList(ArrayList<LeagueBean> leaguesList) {
 		this.leaguesList = leaguesList;
 	}
 }

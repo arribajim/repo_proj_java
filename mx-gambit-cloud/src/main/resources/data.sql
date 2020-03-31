@@ -131,7 +131,7 @@ insert into leagues values ( 104331422, 'Championnat National', 9850, 103850653)
 insert into leagues values ( 103877464, 'Primeira Liga', 9900, 103850106);
 insert into leagues values ( 107283426, 'Copa Portugal', 9890, 103850106);
 
-insert into events values ( 2085580977, 'Mallorca - Alavés','2020-02-15 06:00:00.000', 0, false, '18641108', 103852954);
+/*insert into events values ( 2085580977, 'Mallorca - Alavés','2020-02-15 06:00:00.000', 0, false, '18641108', 103852954);
 insert into events values ( 2085580322, 'Athletic - Osasuna','2020-02-16 11:30:00.000', 0, false, '18641098', 103852954);
 insert into events values ( 2085583326, 'Barcelona - Getafe','2020-02-15 09:00:00.000', 0, false, '18641100', 103852954);
 insert into events values ( 2085581107, 'Real Madrid - Celta','2020-02-16 14:00:00.000', 0, false, '18641110', 103852954);
@@ -373,7 +373,7 @@ insert into GAMBIT_RESULTS values ( 2619360202, 'FC Juárez','2020-03-07 17:42:2
 insert into GAMBIT_RESULTS values ( 2619360203, 'Empate','2020-03-07 17:42:23.804', 3.7, 1, 'false', 2619359753);
 insert into GAMBIT_RESULTS values ( 2619360204, 'Santos Laguna','2020-03-07 17:42:23.804', 2.15, 2, 'false', 2619359753);
 
-
+*/
 
 
 /*

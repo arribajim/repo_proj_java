@@ -87,17 +87,17 @@ CREATE TABLE  if not exists public.games (
 CREATE TABLE  if not exists public.gambit_results (
   nodeid       bigint                      NOT NULL, 
   name         character varying(200)          NULL, 
-  createtime   timestamp without time zone     NULL, 
-  odd          numeric(5,2)                    NULL, 
+  create_time   timestamp without time zone     NULL, 
+  odd          numeric(5,3)                    NULL, 
   priority     integer                         NULL, 
   locked       boolean                         NULL, 
   parentnodeid bigint                          NULL
 );
 
 CREATE TABLE  if not exists public.gambit_trace (
-  nodeid       integer                     NOT NULL, 
-  createtime   timestamp without time zone     NULL, 
-  odd          numeric(5,2)                    NULL, 
+  nodeid       bigint                     NOT NULL, 
+  create_time   timestamp without time zone     NULL, 
+  odd          numeric(5,3)                    NULL, 
   parentnodeid bigint                          NULL
 );
 

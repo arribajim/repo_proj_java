@@ -2,16 +2,27 @@ package gmx.ambit.bean;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
-public class Event extends BaseBean{
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
+
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Slf4j
+public class EventBean extends BaseBean{
 	private Boolean Locked;
 	private Date StarDate;	
 	private String StatisticsId;
-	
+	private List<GameBean> Games ;
+	private List<ParticipantBean> Participants;
 
 	public String toString() {
+		if(Games!=null)
+			log.info(" Games size "+ Games.size());
 		return NodeId +", "+ Name+", "+Priority+", "+ParentNodeId
-				+", "+Locked+", "+StarDate+", "+StatisticsId;
+				+", "+Locked+", "+StarDate+", "+StatisticsId + Games +"  " +Participants;
 	}
 	
 	public String sqlInsert() {
@@ -20,45 +31,7 @@ public class Event extends BaseBean{
         				NodeId,Name,getTimeStampFormat(),Priority,Locked,StatisticsId,ParentNodeId);
 		return sql;
 	}
-	/**
-	 * @return the locked
-	 */
-	public Boolean getLocked() {
-		return Locked;
-	}
 
-	/**
-	 * @param locked the locked to set
-	 */
-	public void setLocked(Boolean locked) {
-		Locked = locked;
-	}
-
-	/**
-	 * @return the starDate
-	 */
-	public Date getStarDate() {
-		return StarDate;
-	}
-
-	/**
-	 * @param starDate the starDate to set
-	 */
-	public void setStarDate(Date starDate) {
-		StarDate = starDate;
-	}
-	/**
-	 * @return the statisticsId
-	 */
-	public String getStatisticsId() {
-		return StatisticsId;
-	}
-	/**
-	 * @param statisticsId the statisticsId to set
-	 */
-	public void setStatisticsId(String statisticsId) {
-		StatisticsId = statisticsId;
-	}
 
 	/**
 	 * @return the timeStampFormat
@@ -68,5 +41,7 @@ public class Event extends BaseBean{
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		return simpleDateFormat.format(StarDate);
 	}
+
+	
 	 
 }
