@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="countries")
+@Table(name="leagues")
 public class League {
 	@Id
 	@Column(name="nodeid")
@@ -24,5 +24,5 @@ public class League {
 	private Integer Priority;
 	@NotNull
 	@Column(name="parentnodeid")
-	private Integer parentnodeid;
+	private BigInteger parentnodeid;
 }

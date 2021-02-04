@@ -5,3 +5,12 @@ mx-gambit-cloud/src/main/resources/data.sql
 mx-gambit-cloud/src/main/resources/GetEvents.json
 mx-gambit-cloud/src/main/java/tacos
 mx-gambit-cloud/src/test/java/tacos
+*class
+*.war
+*.zip
+.classpath
+.project
+target
+.settings
+*.class
+.vs/

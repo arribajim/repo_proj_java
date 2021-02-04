@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
-import tacos.Taco;
 
 @Data
 @Entity
@@ -21,7 +20,7 @@ public class Country{
 	
 	@Id
 	@Column(name="nodeid")
-	private BigInteger NodeId;
+	private Integer NodeId;
 	@NotNull
 	@Column(name="countrycode")
 	private String CountryCode;

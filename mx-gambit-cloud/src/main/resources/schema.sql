@@ -51,86 +51,86 @@ alter table Taco_Order_Tacos
 -- Name: countries; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE  if not exists public.countries (
+CREATE TABLE  if not exists countries (
     nodeid integer NOT NULL,
 	name character varying(100),
     countrycode character varying(10),   
-    priority integer
+    priority integer    
 );
 
-CREATE TABLE  if not exists public.leagues (
+CREATE TABLE  if not exists leagues (
     nodeid BIGINT NOT NULL,
     name character varying(200),
     priority integer,
-    parentnodeid integer
+    parentnodeid BIGINT
 );
 
-CREATE TABLE  if not exists public.events (
+CREATE TABLE  if not exists events (
     nodeid bigint NOT NULL,
     name character varying(200),
     startdate timestamp without time zone,
     priority integer,
     locked boolean DEFAULT false,
     statisticsid character varying(12),
-    parentnodeid integer
+    parentnodeid BIGINT
 );
 
-CREATE TABLE  if not exists public.games (
+CREATE TABLE  if not exists games (
   nodeid       bigint                 NOT NULL, 
   name         character varying(200)     NULL, 
   priority     integer                    NULL, 
   locked       boolean                    NULL DEFAULT false, 
-  parentnodeid bigint                     NULL
+  parentnodeid BIGINT                     NULL
 );
 
 
-CREATE TABLE  if not exists public.gambit_results (
+CREATE TABLE  if not exists gambit_results (
   nodeid       bigint                      NOT NULL, 
   name         character varying(200)          NULL, 
   create_time   timestamp without time zone     NULL, 
   odd          numeric(5,3)                    NULL, 
   priority     integer                         NULL, 
   locked       boolean                         NULL, 
-  parentnodeid bigint                          NULL
+  parentnodeid BIGINT                          NULL
 );
 
-CREATE TABLE  if not exists public.gambit_trace (
+CREATE TABLE  if not exists gambit_trace (
   nodeid       bigint                     NOT NULL, 
   create_time   timestamp without time zone     NULL, 
   odd          numeric(5,3)                    NULL, 
-  parentnodeid bigint                          NULL
+  parentnodeid BIGINT                          NULL
 );
 
-ALTER TABLE public.leagues
+ALTER TABLE leagues
     ADD CONSTRAINT leagues_pk PRIMARY KEY (nodeid);
 
-ALTER TABLE public.leagues
-    ADD CONSTRAINT leagues_parentnodeid_fkey FOREIGN KEY (parentnodeid) REFERENCES public.countries(nodeid);
+ALTER TABLE leagues
+    ADD CONSTRAINT leagues_parentnodeid_fkey FOREIGN KEY (parentnodeid) REFERENCES countries ( nodeid );
 	
 
-ALTER TABLE public.events
+ALTER TABLE events
     ADD CONSTRAINT events_pkey PRIMARY KEY (nodeid);
 
-ALTER TABLE public.events
-    ADD CONSTRAINT events_parentnodeid_fkey FOREIGN KEY (parentnodeid) REFERENCES public.leagues(nodeid);
+ALTER TABLE events
+    ADD CONSTRAINT events_parentnodeid_fkey FOREIGN KEY (parentnodeid) REFERENCES leagues(nodeid);
 	
-ALTER TABLE public.games ADD
+ALTER TABLE games ADD
   CONSTRAINT game_pkey PRIMARY KEY ( nodeid );
 
-ALTER TABLE public.games ADD
+ALTER TABLE games ADD
   CONSTRAINT game_parentnodeid_fkey FOREIGN KEY ( parentnodeid )
-    REFERENCES public.events ( nodeid );	
+    REFERENCES events ( nodeid );	
 	
-ALTER TABLE public.gambit_results ADD
+ALTER TABLE gambit_results ADD
   CONSTRAINT gmt_reslts_pk PRIMARY KEY ( nodeid );
 
-ALTER TABLE public.gambit_results ADD
+ALTER TABLE gambit_results ADD
   CONSTRAINT gambit_results_parentnodeid_fkey FOREIGN KEY ( parentnodeid )
-    REFERENCES public.games ( nodeid );
+    REFERENCES games ( nodeid );
 	
-ALTER TABLE public.gambit_trace ADD
+ALTER TABLE gambit_trace ADD
   CONSTRAINT gambit_pkey PRIMARY KEY ( nodeid );
 
-ALTER TABLE public.gambit_trace ADD
+ALTER TABLE gambit_trace ADD
   CONSTRAINT gambit_parentnodeid_fkey FOREIGN KEY ( parentnodeid )
-    REFERENCES public.gambit_results ( nodeid );
+    REFERENCES gambit_results ( nodeid );
