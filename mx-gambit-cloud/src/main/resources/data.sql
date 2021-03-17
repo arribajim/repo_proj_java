@@ -1,31 +1,3 @@
-delete from Taco_Order_Tacos;
-delete from Taco_Ingredients;
-delete from Taco;
-delete from Taco_Order;
-
-delete from Ingredient;
-insert into Ingredient (id, name, type) 
-                values ('FLTO', 'Flour Tortilla', 'WRAP');
-insert into Ingredient (id, name, type) 
-                values ('COTO', 'Corn Tortilla', 'WRAP');
-insert into Ingredient (id, name, type) 
-                values ('GRBF', 'Ground Beef', 'PROTEIN');
-insert into Ingredient (id, name, type) 
-                values ('CARN', 'Carnitas', 'PROTEIN');
-insert into Ingredient (id, name, type) 
-                values ('TMTO', 'Diced Tomatoes', 'VEGGIES');
-insert into Ingredient (id, name, type) 
-                values ('LETC', 'Lettuce', 'VEGGIES');
-insert into Ingredient (id, name, type) 
-                values ('CHED', 'Cheddar', 'CHEESE');
-insert into Ingredient (id, name, type) 
-                values ('JACK', 'Monterrey Jack', 'CHEESE');
-insert into Ingredient (id, name, type) 
-                values ('SLSA', 'Salsa', 'SAUCE');
-insert into Ingredient (id, name, type) 
-                values ('SRCR', 'Sour Cream', 'SAUCE');
-
-
 insert into countries values ( 107082063, 'México', 'MX', 1009900);
 insert into countries values ( 103849350, 'Internacional', 'INT1', 1009890);
 insert into countries values ( 103849006, 'Clubes Internacional', 'INT2', 1009880);
