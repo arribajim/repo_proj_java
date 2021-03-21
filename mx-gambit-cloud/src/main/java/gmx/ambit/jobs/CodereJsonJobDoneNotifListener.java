@@ -33,29 +33,33 @@ public class CodereJsonJobDoneNotifListener extends JobExecutionListenerSupport 
 
 	@Override
 	public void afterJob(JobExecution jobExecution) {
-		super.afterJob(jobExecution);
-		log.info("::::::> AFTER JOB START COUNT OF EVENTS  " + repository.count());
+		super.afterJob(jobExecution);		
 		if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
-			log.info("!!! JOB FINISHED! Time to verify the results Count " + repository.count());
-				
-		} else if (jobExecution.getStatus() == BatchStatus.FAILED) {
-			
+			log.info("!!! JOB FINISHED! Time to verify the results Count " + repository.count());							
+		} else if (jobExecution.getStatus() == BatchStatus.FAILED) {			
 			BetUtil.toEmptyProccessDir(processDir,dateFormat+".json",outputDir);
 			StringBuffer sb = new StringBuffer();
 			jobExecution.getAllFailureExceptions().forEach(elt -> {
 				sb.append(elt.getCause().toString()).append("\n");
 			});
-
 			log.error("Fallo la ejecución del proceso batch", sb.toString());
 		}
+		BetUtil.toDeleteFile(processDir + processFile);
+		
 	}
 
 	@Override
 	public void beforeJob(JobExecution jobExecution) {
 		// TODO Auto-generated method stub
-		super.beforeJob(jobExecution);
-		String nameFile = BetUtil.toProcessFile(inputDir, processDir + processFile);
-		log.info("::::::::::::> BEFORE JOB START COUNT OF EVENTS  " + repository.count()+" MOVING FILE "+nameFile);
+		super.beforeJob(jobExecution);		
+		try {
+			String nameFile = BetUtil.toProcessFile(inputDir, processDir + processFile);
+			log.debug("::::::::::::> BEFORE JOB START COUNT OF EVENTS  " + repository.count()+" MOVING FILE "+nameFile);
+		}catch(ArrayIndexOutOfBoundsException e) {
+			log.error("Not found files, stoping the job");
+			jobExecution.stop();
+		}
+		
 		
 
 	}

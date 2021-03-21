@@ -347,18 +347,19 @@ insert into GAMBIT_RESULTS values ( 2619360204, 'Santos Laguna','2020-03-07 17:4
 
 
 
+#shown total trace by country code
+select count(*) from
+predictivebet_sch.gambit_trace where parentnodeid in(
+SELECT e.nodeid FROM predictivebet_sch.gambit_results gr 
+join predictivebet_sch.games g on gr.parentnodeid=g.nodeid
+join predictivebet_sch.events e on g.parentnodeid=e.nodeid
+join predictivebet_sch.leagues l on e.parentnodeid=l.nodeid 
+join predictivebet_sch.countries c on c.nodeid=l.parentnodeid
+where c.countrycode='' );
 
-/*
-select c.nodeid, c.name, 
-	l.nodeid, l.name,
-	e.nodeid, e.name, e.startdate,
-	g.name, g.priority,
-	gr.name, gr.createtime,gr.odd,
-	ga.createtime, ga.odd, ga.parentnodeid
-from countries c
-join leagues l on ( c.nodeid=l.parentnodeid)
-join events e on  ( l.nodeid=e.parentnodeid)
-join games g on (e.nodeid=g.parentnodeid)
-join gambit_results gr on (g.nodeid=gr.parentnodeid)
-join gambit ga on (gr.nodeid=ga.parentnodeid)
-where c.countrycode='MX'*/
+# total trace by event
+SELECT * FROM predictivebet_sch.gambit_trace gt 
+join predictivebet_sch.events e on gt.parentnodeid=e.nodeid
+join predictivebet_sch.games g on g.parentnodeid=e.nodeid
+join predictivebet_sch.gambit_results gr on gr.parentnodeid=g.nodeid
+where e.nodeid=2071733006;

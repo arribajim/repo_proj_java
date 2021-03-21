@@ -8,6 +8,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 public class BetUtil {
 
 	
@@ -23,19 +25,21 @@ public class BetUtil {
 	public static String toProcessFile(String inputDir,String procFile) {
 		String namefile ="";
 		File f = new File(inputDir);
-		for(File s:dirListByAscendingDate(f)) {
-			if(s.isFile()) {				
-				try {
-					namefile = s.getPath();
-					Files.move(Paths.get(s.getAbsolutePath()), 
-							Paths.get(procFile), StandardCopyOption.REPLACE_EXISTING);
-					break;
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}				
-		}
+		try {
+			for(File s:dirListByAscendingDate(f)) {
+				
+				if(s.isFile()) {				
+					try {
+						namefile = s.getPath();
+						Files.move(Paths.get(s.getAbsolutePath()), 
+								Paths.get(procFile), StandardCopyOption.REPLACE_EXISTING);
+						break;
+					} catch (IOException e) {
+						log.error("ERRORJIM: CANNOT REPLACE ON toProcessFile", e);
+					}
+				}				
+			}
+		}catch(ArrayIndexOutOfBoundsException e) {throw e;}
 		return namefile;
 	}
 
@@ -47,6 +51,9 @@ public class BetUtil {
 	      return null;
 	    }
 	    File files[] = folder.listFiles();
+	    if(files==null || files.length==0) {
+	    	throw new ArrayIndexOutOfBoundsException();
+	    }
 	    Arrays.sort( files, new Comparator()
 	    {
 	      public int compare(final Object o1, final Object o2) {
@@ -71,5 +78,14 @@ public class BetUtil {
 	      }
 	    }); 
 	    return files;
-	  }  
+	  }
+
+	public static void toDeleteFile(String procFile) {
+		try {
+			Files.deleteIfExists(Paths.get(procFile));
+		} catch (IOException e) {
+			log.error("Errorjim: cannot delete file "+procFile, e);
+		}
+		
+	}  
 }
